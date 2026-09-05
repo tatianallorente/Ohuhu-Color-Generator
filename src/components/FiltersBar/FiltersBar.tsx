@@ -1,4 +1,4 @@
-import { Autocomplete, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { COLOR_GROUP_LABELS, COLOR_GROUP_OPTIONS } from '@/common/colorGroups';
 import type { GenerationFilters } from '@/types/generation.types';
 import { COLOR_COUNT_OPTIONS, useFiltersBarController } from './FiltersBar.controller';
@@ -56,29 +56,23 @@ export function FiltersBar({ onGenerate }: FiltersBarProps) {
           </Select>
         </FormControl>
 
-        <Autocomplete
-          freeSolo
-          onChange={actions.handleColorCountChange}
-          onInputChange={actions.handleColorCountInputChange}
-          options={COLOR_COUNT_OPTIONS}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              error={!data.hasValidRequestedColorCount}
-              helperText={data.hasValidRequestedColorCount ? undefined : 'Enter a positive whole number.'}
-              label="Number of colors"
-            />
-          )}
-          value={data.requestedColorCount}
-        />
+        <FormControl fullWidth>
+          <InputLabel id="color-count-label">Number of colors</InputLabel>
+          <Select
+            label="Number of colors"
+            labelId="color-count-label"
+            onChange={actions.handleColorCountChange}
+            value={data.requestedColorCount}
+          >
+            {COLOR_COUNT_OPTIONS.map((colorCount) => (
+              <MenuItem key={colorCount} value={colorCount}>
+                {colorCount}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Button
-          className="min-h-14"
-          disabled={!data.hasValidRequestedColorCount}
-          onClick={actions.handleGenerate}
-          size="large"
-          variant="contained"
-        >
+        <Button className="min-h-14" onClick={actions.handleGenerate} size="large" variant="contained">
           Generate colors
         </Button>
       </div>

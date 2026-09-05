@@ -1,45 +1,82 @@
-import { Alert } from '@mui/material';
-import { COLOR_GROUP_LABELS } from '@/common/colorGroups';
+import {
+  Alert,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  Switch,
+  Typography,
+} from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import clsx from 'clsx';
 import { ColorItem } from '@/components/ColorItem/ColorItem';
 import type { GenerationResult } from '@/types/generation.types';
+import { COLUMN_OPTIONS, useResultsPanelController } from './ResultsPanel.controller';
+import { RESULTS_PANEL_THEMES } from './ResultsPanel.theme';
 
 interface ResultsPanelProps {
   generationResult: GenerationResult | null;
 }
 
 export function ResultsPanel({ generationResult }: ResultsPanelProps) {
-  if (!generationResult) {
-    return (
-      <section className="mt-8 rounded-3xl border-[6px] border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
-        <p className="text-slate-600">Choose your filters and select "Generate colors" to see a combination.</p>
-      </section>
-    );
-  }
-
-  const hasAvailableColors = generationResult.availableColorCount > 0;
-  const hasInsufficientColors = generationResult.availableColorCount < generationResult.requestedColorCount;
-  const colorDescription =
-    generationResult.colorGroup === 'all'
-      ? 'colors'
-      : `${COLOR_GROUP_LABELS[generationResult.colorGroup].toLowerCase()} colors`;
+  const { actions, data } = useResultsPanelController({ generationResult });
 
   return (
-    <section className="mt-8 rounded-3xl border-[6px] border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      {hasInsufficientColors && (
-        <Alert severity="warning">
-          {hasAvailableColors
-            ? `You requested ${generationResult.requestedColorCount} ${colorDescription}, but ${generationResult.paletteName} only contains ${generationResult.availableColorCount}. Showing all available colors.`
-            : `${generationResult.paletteName} does not contain any ${colorDescription}.`}
-        </Alert>
-      )}
+    <ThemeProvider theme={data.isDarkBackground ? RESULTS_PANEL_THEMES.dark : RESULTS_PANEL_THEMES.light}>
+      <section
+        className={clsx(
+          'mt-8 rounded-3xl border-[6px] p-6 shadow-sm transition-colors sm:p-8',
+          data.isDarkBackground
+            ? 'border-slate-700 bg-black text-slate-100'
+            : 'border-slate-200 bg-white text-slate-900'
+        )}
+      >
+        <div className="flex flex-wrap items-center justify-end gap-4">
+          <FormControlLabel
+            label="Dark background"
+            control={
+              <Switch checked={data.isDarkBackground} color="secondary" onChange={actions.handleBackgroundChange} />
+            }
+          />
 
-      {hasAvailableColors && (
-        <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-          {generationResult.colors.map((color) => (
-            <ColorItem key={color.code} color={color} />
-          ))}
+          <FormControl size="small">
+            <InputLabel id="columns-label">Columns</InputLabel>
+            <Select label="Columns" labelId="columns-label" onChange={actions.handleColumnsChange} value={data.columns}>
+              {COLUMN_OPTIONS.map((columnCount) => (
+                <MenuItem key={columnCount} value={columnCount}>
+                  {columnCount}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
-      )}
-    </section>
+
+        <Divider sx={{ my: 3 }} />
+
+        {!data.generationResult && (
+          <Typography align="center" className="py-6" color="text.secondary">
+            Choose your filters and select "Generate colors" to see a combination.
+          </Typography>
+        )}
+
+        {data.generationResult && data.hasInsufficientColors && (
+          <Alert severity="warning">
+            {data.hasAvailableColors
+              ? `You requested ${data.generationResult.requestedColorCount} ${data.colorGroupLabel} colors, but ${data.generationResult.paletteName} only contains ${data.generationResult.availableColorCount}. Showing all available colors.`
+              : `${data.generationResult.paletteName} does not contain any ${data.colorGroupLabel} colors.`}
+          </Alert>
+        )}
+
+        {data.generationResult && data.hasAvailableColors && (
+          <div className="mt-6 grid gap-5" style={{ gridTemplateColumns: `repeat(${data.columns}, minmax(0, 1fr))` }}>
+            {data.generationResult.colors.map((color) => (
+              <ColorItem key={color.code} color={color} isDarkBackground={data.isDarkBackground} />
+            ))}
+          </div>
+        )}
+      </section>
+    </ThemeProvider>
   );
 }
