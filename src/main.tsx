@@ -5,7 +5,7 @@ import './styles/main.css';
 const root = document.getElementById('root');
 
 if (!root) {
-  throw new Error('No se ha encontrado el elemento raíz de la aplicación.');
+  throw new Error('Root element was not found.');
 }
 
 createRoot(root).render(<App />);
