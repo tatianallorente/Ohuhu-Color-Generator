@@ -35,3 +35,9 @@ export interface OhuhuSeries {
 export interface OhuhuCatalog {
   series: OhuhuSeries[];
 }
+
+export interface ParsedOhuhuColorCode {
+  family: string;
+  saturation: number;
+  brightness: number;
+}
