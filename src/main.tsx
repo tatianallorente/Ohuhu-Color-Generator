@@ -1,0 +1,11 @@
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
+import './styles/main.css';
+
+const root = document.getElementById('root');
+
+if (!root) {
+  throw new Error('No se ha encontrado el elemento raíz de la aplicación.');
+}
+
+createRoot(root).render(<App />);
