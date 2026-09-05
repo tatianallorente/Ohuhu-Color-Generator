@@ -1,0 +1,44 @@
+{
+  "series": [
+    {
+      "id": "honolulu",
+      "name": "Ohuhu Honolulu",
+      "palettes": [
+        {
+          "id": "coco-wyo",
+          "name": "Coco Wyo",
+          "declaredColorCount": 48,
+          "colors": [
+            { "code": "YG030", "name": "Apple Green", "hex": "#B8D8A8" },
+            { "code": "YG050", "name": "Yellow Green", "hex": "#91C788" },
+            { "code": "R120", "name": "Blush", "hex": "#E87B99", "group": "pink" },
+            { "code": "RV180", "name": "Pale Cherry Pink", "hex": "#F0A0B5", "group": "pink" },
+            { "code": "Y030", "name": "Lemon Chiffon", "hex": "#F7E58D" },
+            { "code": "YR170", "name": "Chrome Orange", "hex": "#E98A3A" },
+            { "code": "B220", "name": "Smoke Blue", "hex": "#7EA8C9" },
+            { "code": "V250", "name": "Lilac", "hex": "#AF92C7" },
+            { "code": "E160", "name": "Cocoa", "hex": "#9A6B4D" },
+            { "code": "CG020", "name": "Cool Grey", "hex": "#B8C0C9" }
+          ]
+        },
+        {
+          "id": "jade-summer",
+          "name": "Jade Summer",
+          "declaredColorCount": 48,
+          "colors": [
+            { "code": "G130", "name": "Forest Green", "hex": "#4E8C69" },
+            { "code": "YG070", "name": "Spring Green", "hex": "#72B879" },
+            { "code": "R090", "name": "Rose Mist", "hex": "#D97786", "group": "pink" },
+            { "code": "R180", "name": "Vermilion", "hex": "#D95D4C", "group": "red" },
+            { "code": "Y050", "name": "Buttercup", "hex": "#F5CE57" },
+            { "code": "YR240", "name": "Apricot", "hex": "#ECA26E" },
+            { "code": "PB270", "name": "Ocean Blue", "hex": "#5788B8" },
+            { "code": "V230", "name": "Wisteria", "hex": "#8D72B1" },
+            { "code": "E220", "name": "Warm Brown", "hex": "#815B43" },
+            { "code": "WG050", "name": "Warm Grey", "hex": "#AFA69B" }
+          ]
+        }
+      ]
+    }
+  ]
+}
