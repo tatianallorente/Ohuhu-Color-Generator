@@ -1,6 +1,8 @@
 
+import { ColorGeneratorView } from '@/views/ColorGeneratorView/ColorGeneratorView';
+
 function App() {
-  return <h1>Hola, mundo</h1>;
+  return <ColorGeneratorView />;
 }
 
 export default App;
