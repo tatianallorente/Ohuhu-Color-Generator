@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import clsx from 'clsx';
+import { PreviewDrawing } from '@/components/PreviewDrawing/PreviewDrawing';
 import { ColorItem } from '@/components/ColorItem/ColorItem';
 import type { GenerationResult } from '@/types/generation.types';
 import { COLUMN_OPTIONS, useResultsPanelController } from './ResultsPanel.controller';
@@ -64,17 +65,20 @@ export function ResultsPanel({ generationResult }: ResultsPanelProps) {
         {data.generationResult && data.hasInsufficientColors && (
           <Alert severity="warning">
             {data.hasAvailableColors
-              ? `You requested ${data.generationResult.requestedColorCount} ${data.colorGroupLabel} colors, but ${data.generationResult.paletteName} only contains ${data.generationResult.availableColorCount}. Showing all available colors.`
-              : `${data.generationResult.paletteName} does not contain any ${data.colorGroupLabel} colors.`}
+              ? `You requested ${data.generationResult.requestedColorCount} colors, but only ${data.generationResult.availableColorCount} match your selection in ${data.generationResult.paletteName}. Showing all available colors.`
+              : `No colors in ${data.generationResult.paletteName} match your selection.`}
           </Alert>
         )}
 
         {data.generationResult && data.hasAvailableColors && (
-          <div className="mt-6 grid gap-5" style={{ gridTemplateColumns: `repeat(${data.columns}, minmax(0, 1fr))` }}>
-            {data.generationResult.colors.map((color) => (
-              <ColorItem key={color.code} color={color} isDarkBackground={data.isDarkBackground} />
-            ))}
-          </div>
+          <>
+            <div className="mt-6 grid gap-5" style={{ gridTemplateColumns: `repeat(${data.columns}, minmax(0, 1fr))` }}>
+              {data.generationResult.colors.map((color) => (
+                <ColorItem key={color.code} color={color} isDarkBackground={data.isDarkBackground} />
+              ))}
+            </div>
+            <PreviewDrawing colors={data.generationResult.colors} />
+          </>
         )}
       </section>
     </ThemeProvider>
