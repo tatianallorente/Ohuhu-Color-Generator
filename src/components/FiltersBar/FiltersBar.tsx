@@ -1,11 +1,13 @@
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { COLOR_GROUP_LABELS, COLOR_GROUP_OPTIONS } from '@/common/colorGroups';
+import { Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select } from '@mui/material';
+import { COLOR_FAMILY_LABELS, COLOR_FAMILY_OPTIONS } from '@/common/colorFamilies';
 import type { GenerationFilters } from '@/types/generation.types';
 import { COLOR_COUNT_OPTIONS, useFiltersBarController } from './FiltersBar.controller';
 
 interface FiltersBarProps {
   onGenerate?: (filters: GenerationFilters) => void;
 }
+
+const OWNED_PALETTE_IDS = ['coco-wyo', 'jade-summer'];
 
 export function FiltersBar({ onGenerate }: FiltersBarProps) {
   const controller = useFiltersBarController({ onGenerate });
@@ -16,41 +18,59 @@ export function FiltersBar({ onGenerate }: FiltersBarProps) {
       aria-label="Color generation filters"
       className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm backdrop-blur sm:p-6"
     >
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1.1fr_1fr_0.8fr_auto] xl:items-end">
-        <FormControl disabled fullWidth>
-          <InputLabel id="series-label">Series</InputLabel>
-          <Select label="Series" labelId="series-label" value={data.seriesName}>
-            <MenuItem value={data.seriesName}>{data.seriesName}</MenuItem>
-          </Select>
-        </FormControl>
-
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1.3fr_0.8fr_auto] xl:items-end">
         <FormControl fullWidth>
           <InputLabel id="palette-label">Palette</InputLabel>
           <Select
+            displayEmpty
             label="Palette"
             labelId="palette-label"
+            multiple
             onChange={actions.handlePaletteChange}
-            value={data.selectedPaletteId}
+            renderValue={(selected) =>
+              selected.length === 0 ? (
+                <span className="text-neutral-400">No palettes selected</span>
+              ) : (
+                data.paletteOptions
+                  .filter((palette) => selected.includes(palette.id))
+                  .map((palette) => palette.name)
+                  .join(', ')
+              )
+            }
+            value={data.selectedPaletteIds}
           >
             {data.paletteOptions.map((palette) => (
-              <MenuItem key={palette.id} value={palette.id}>
-                {palette.name} ({palette.declaredColorCount})
+              <MenuItem key={palette.id} value={palette.id} disabled={!OWNED_PALETTE_IDS.includes(palette.id)}>
+                <Checkbox checked={data.selectedPaletteIds.includes(palette.id)} />
+                <ListItemText primary={`${palette.name} (${palette.declaredColorCount})`} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel id="color-group-label">Color group</InputLabel>
+          <InputLabel id="color-families-label" shrink>
+            Color families
+          </InputLabel>
           <Select
-            label="Color group"
-            labelId="color-group-label"
-            onChange={actions.handleColorGroupChange}
-            value={data.selectedColorGroup}
+            displayEmpty
+            label="Color families"
+            labelId="color-families-label"
+            multiple
+            onChange={actions.handleColorFamiliesChange}
+            renderValue={(selected) =>
+              selected.length === 0 ? (
+                <span className="text-neutral-400">All families</span>
+              ) : (
+                selected.map((family) => `${family} (${COLOR_FAMILY_LABELS[family]})`).join(', ')
+              )
+            }
+            value={data.selectedFamilies}
           >
-            {COLOR_GROUP_OPTIONS.map((group) => (
-              <MenuItem key={group} value={group}>
-                {COLOR_GROUP_LABELS[group]}
+            {COLOR_FAMILY_OPTIONS.map((family) => (
+              <MenuItem key={family} value={family}>
+                <Checkbox checked={data.selectedFamilies.includes(family)} />
+                <ListItemText primary={`${family} (${COLOR_FAMILY_LABELS[family]})`} />
               </MenuItem>
             ))}
           </Select>

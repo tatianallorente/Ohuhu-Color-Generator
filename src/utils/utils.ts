@@ -1,12 +1,9 @@
-import { getColorGroup } from '@/utils/colorCode';
-import type { ColorGroup, OhuhuColor } from '@/types/ohuhu.types';
+import type { ColorFamily } from '@/common/colorFamilies';
+import type { OhuhuColor } from '@/types/ohuhu.types';
+import { getColorFamily } from './colorCode';
 
-export function filterColors(colors: readonly OhuhuColor[], group: ColorGroup): OhuhuColor[] {
-  if (group === 'all') {
-    return [...colors];
-  }
-
-  return colors.filter((color) => getColorGroup(color) === group);
+export function isColorlessBlender(color: OhuhuColor): boolean {
+  return color.code === '0' || /colorless blender/i.test(color.name);
 }
 
 export function shuffle<T>(items: readonly T[]): T[] {
@@ -21,4 +18,15 @@ export function shuffle<T>(items: readonly T[]): T[] {
   }
 
   return shuffledItems;
+}
+
+export function filterColorsByFamilies(colors: readonly OhuhuColor[], families: readonly ColorFamily[]): OhuhuColor[] {
+  if (families.length === 0) {
+    return [...colors];
+  }
+
+  return colors.filter((color) => {
+    const family = getColorFamily(color.code);
+    return family !== null && families.includes(family);
+  });
 }

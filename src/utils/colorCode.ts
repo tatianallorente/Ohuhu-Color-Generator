@@ -1,24 +1,7 @@
-import type { ColorGroup, OhuhuColor, ParsedOhuhuColorCode, SpecificColorGroup } from '@/types/ohuhu.types';
+import type { ColorFamily } from '@/common/colorFamilies';
+import type { ParsedOhuhuColorCode } from '@/types/ohuhu.types';
 
-const OHUHU_CODE_PATTERN = /^(?<family>[A-Z]+)(?<value>\d{3})$/;
-
-const COLOR_GROUP_BY_FAMILY: Readonly<Record<string, SpecificColorGroup>> = {
-  B: 'blue',
-  BG: 'blue',
-  BR: 'brown',
-  CG: 'gray',
-  E: 'brown',
-  G: 'green',
-  PB: 'blue',
-  R: 'red',
-  RP: 'pink',
-  RV: 'pink',
-  V: 'purple',
-  WG: 'gray',
-  Y: 'yellow',
-  YG: 'green',
-  YR: 'orange',
-};
+const OHUHU_CODE_PATTERN = /^(?<family>[A-Z]+)(?<value>\d{2,3})$/;
 
 export function parseOhuhuColorCode(code: string): ParsedOhuhuColorCode | null {
   const match = OHUHU_CODE_PATTERN.exec(code.trim().toUpperCase());
@@ -36,16 +19,12 @@ export function parseOhuhuColorCode(code: string): ParsedOhuhuColorCode | null {
   };
 }
 
-export function getGroupFromOhuhuCode(code: string): SpecificColorGroup | null {
+export function getColorFamily(code: string): ColorFamily | null {
   const parsedCode = parseOhuhuColorCode(code);
 
   if (!parsedCode) {
     return null;
   }
 
-  return COLOR_GROUP_BY_FAMILY[parsedCode.family] ?? null;
-}
-
-export function getColorGroup(color: OhuhuColor): ColorGroup | null {
-  return color.group ?? getGroupFromOhuhuCode(color.code);
+  return parsedCode.family as ColorFamily;
 }

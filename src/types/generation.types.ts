@@ -1,15 +1,14 @@
-import type { ColorGroup } from './ohuhu.types';
 import type { OhuhuColor } from './ohuhu.types';
+import type { ColorFamily } from '@/common/colorFamilies';
 
 export interface GenerationFilters {
-  paletteId: string;
-  colorGroup: ColorGroup;
+  families: ColorFamily[];
+  paletteIds: string[];
   requestedColorCount: number;
 }
 
 export interface GenerationResult {
   availableColorCount: number;
-  colorGroup: ColorGroup;
   colors: OhuhuColor[];
   paletteName: string;
   requestedColorCount: number;

@@ -1,8 +1,8 @@
 import type { SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
+import type { ColorFamily } from '@/common/colorFamilies';
 import { palettes } from '@/data/palettes';
 import type { GenerationFilters } from '@/types/generation.types';
-import type { ColorGroup } from '@/types/ohuhu.types';
 
 const selectedSeries = palettes.series[0];
 
@@ -13,16 +13,18 @@ interface UseFiltersBarControllerOptions {
 }
 
 export function useFiltersBarController({ onGenerate }: UseFiltersBarControllerOptions) {
-  const [selectedPaletteId, setSelectedPaletteId] = useState(selectedSeries.palettes[0].id);
-  const [selectedColorGroup, setSelectedColorGroup] = useState<ColorGroup>('all');
+  const [selectedPaletteIds, setSelectedPaletteIds] = useState([selectedSeries.palettes[0].id]);
+  const [selectedFamilies, setSelectedFamilies] = useState<ColorFamily[]>([]);
   const [requestedColorCount, setRequestedColorCount] = useState(4);
 
-  const handlePaletteChange = (event: SelectChangeEvent<string>) => {
-    setSelectedPaletteId(event.target.value);
+  const handlePaletteChange = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value;
+    setSelectedPaletteIds(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const handleColorGroupChange = (event: SelectChangeEvent<ColorGroup>) => {
-    setSelectedColorGroup(event.target.value as ColorGroup);
+  const handleColorFamiliesChange = (event: SelectChangeEvent<ColorFamily[]>) => {
+    const value = event.target.value;
+    setSelectedFamilies(typeof value === 'string' ? (value.split(',') as ColorFamily[]) : value);
   };
 
   const handleColorCountChange = (event: SelectChangeEvent<number>) => {
@@ -31,25 +33,24 @@ export function useFiltersBarController({ onGenerate }: UseFiltersBarControllerO
 
   const handleGenerate = () => {
     onGenerate?.({
-      paletteId: selectedPaletteId,
-      colorGroup: selectedColorGroup,
+      families: selectedFamilies,
+      paletteIds: selectedPaletteIds,
       requestedColorCount,
     });
   };
 
   return {
     actions: {
+      handleColorFamiliesChange,
       handleColorCountChange,
-      handleColorGroupChange,
       handleGenerate,
       handlePaletteChange,
     },
     data: {
       paletteOptions: selectedSeries.palettes,
       requestedColorCount,
-      selectedColorGroup,
-      selectedPaletteId,
-      seriesName: selectedSeries.name,
+      selectedFamilies,
+      selectedPaletteIds,
     },
   };
 }

@@ -34,7 +34,7 @@ export function PreviewDrawing({ colors }: PreviewDrawingProps) {
 
   return (
     <section aria-label="Color preview made from the generated colors" className="mt-8">
-      <Typography align="center" className="mb-4" component="h2" variant="h6">
+      <Typography align="center" className="!mb-4" component="h2" variant="h6">
         Color preview example
       </Typography>
       <svg

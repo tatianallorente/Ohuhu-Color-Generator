@@ -1,28 +1,36 @@
 import { useState } from 'react';
 import { palettes } from '@/data/palettes';
 import type { GenerationFilters, GenerationResult } from '@/types/generation.types';
-import { filterColors, shuffle } from '@/utils/utils';
+import { filterColorsByFamilies, isColorlessBlender, shuffle } from '@/utils/utils';
 
 export function useColorGeneratorViewController() {
   const [generationResult, setGenerationResult] = useState<GenerationResult | null>(null);
 
   const handleGenerate = (filters: GenerationFilters) => {
-    const selectedPalette = palettes.series
+    const selectedPalettes = palettes.series
       .flatMap((series) => series.palettes)
-      .find((palette) => palette.id === filters.paletteId);
+      .filter((palette) => filters.paletteIds.includes(palette.id));
 
-    if (!selectedPalette) {
+    if (selectedPalettes.length === 0) {
       return;
     }
 
-    const availableColors = filterColors(selectedPalette.colors, filters.colorGroup);
+    const paletteColors = Array.from(
+      new Map(
+        selectedPalettes
+          .flatMap((palette) => palette.colors)
+          .filter((color) => !isColorlessBlender(color))
+          .map((color) => [color.code, color])
+      ).values()
+    );
+
+    const availableColors = filterColorsByFamilies(paletteColors, filters.families);
     const colors = shuffle(availableColors).slice(0, filters.requestedColorCount);
 
     setGenerationResult({
       availableColorCount: availableColors.length,
-      colorGroup: filters.colorGroup,
       colors,
-      paletteName: selectedPalette.name,
+      paletteName: selectedPalettes.map((palette) => palette.name).join(', '),
       requestedColorCount: filters.requestedColorCount,
     });
   };
