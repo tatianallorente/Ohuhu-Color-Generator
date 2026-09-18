@@ -36,6 +36,17 @@ export function ResultsPanel({ generationResult }: ResultsPanelProps) {
       >
         <div className="flex flex-wrap items-center justify-end gap-4">
           <FormControlLabel
+            label="Show drawing preview"
+            control={
+              <Switch
+                checked={data.isPreviewVisible}
+                color="secondary"
+                onChange={actions.handlePreviewVisibilityChange}
+              />
+            }
+          />
+
+          <FormControlLabel
             label="Dark background"
             control={
               <Switch checked={data.isDarkBackground} color="secondary" onChange={actions.handleBackgroundChange} />
@@ -77,7 +88,7 @@ export function ResultsPanel({ generationResult }: ResultsPanelProps) {
                 <ColorItem key={color.code} color={color} isDarkBackground={data.isDarkBackground} />
               ))}
             </div>
-            <PreviewDrawing colors={data.generationResult.colors} />
+            {data.isPreviewVisible && <PreviewDrawing colors={data.generationResult.colors} />}
           </>
         )}
       </section>

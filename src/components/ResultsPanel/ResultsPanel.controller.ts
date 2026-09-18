@@ -11,10 +11,15 @@ interface UseResultsPanelControllerOptions {
 
 export function useResultsPanelController({ generationResult }: UseResultsPanelControllerOptions) {
   const [columns, setColumns] = useState(4);
+  const [isPreviewVisible, setIsPreviewVisible] = useState(false);
   const [isDarkBackground, setIsDarkBackground] = useState(false);
 
   const availableColorCount = generationResult?.availableColorCount ?? 0;
   const requestedColorCount = generationResult?.requestedColorCount ?? 0;
+
+  const handlePreviewVisibilityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsPreviewVisible(event.target.checked);
+  };
 
   const handleBackgroundChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsDarkBackground(event.target.checked);
@@ -26,6 +31,7 @@ export function useResultsPanelController({ generationResult }: UseResultsPanelC
 
   return {
     actions: {
+      handlePreviewVisibilityChange,
       handleBackgroundChange,
       handleColumnsChange,
     },
@@ -34,6 +40,7 @@ export function useResultsPanelController({ generationResult }: UseResultsPanelC
       generationResult,
       hasAvailableColors: availableColorCount > 0,
       hasInsufficientColors: availableColorCount < requestedColorCount,
+      isPreviewVisible,
       isDarkBackground,
     },
   };

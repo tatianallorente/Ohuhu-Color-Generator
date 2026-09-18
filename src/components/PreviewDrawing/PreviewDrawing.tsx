@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import type { OhuhuColor } from '@/types/ohuhu.types';
 import { usePreviewDrawingController } from './PreviewDrawing.controller';
 
@@ -20,17 +20,7 @@ const ZONE_PATHS = [
 ];
 
 export function PreviewDrawing({ colors }: PreviewDrawingProps) {
-  const { actions, data } = usePreviewDrawingController({ colors });
-
-  if (!data.isDrawingVisible) {
-    return (
-      <div className="mt-8 flex justify-center">
-        <Button onClick={actions.handleShowDrawing} variant="contained">
-          Preview example
-        </Button>
-      </div>
-    );
-  }
+  const { data } = usePreviewDrawingController({ colors });
 
   return (
     <section aria-label="Color preview made from the generated colors" className="mt-8">
