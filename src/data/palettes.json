@@ -6,7 +6,7 @@
       "palettes": [
         {
           "id": "coco-wyo",
-          "name": "Coco Wyo",
+          "name": "Honolulu 48 Coco Wyo",
           "declaredColorCount": 48,
           "colors": [
             { "code": "B02", "name": "Light Minty Blue", "hex": "#C9E8EA" },
@@ -61,7 +61,7 @@
         },
         {
           "id": "jade-summer",
-          "name": "Jade Summer",
+          "name": "Honolulu 48 Jade Summer",
           "declaredColorCount": 48,
           "colors": [
             { "code": "B115", "name": "Classic Blue", "hex": "#14629D" },
@@ -116,81 +116,99 @@
         },
 
         {
-          "id": "320-colors-dual-tips",
-          "name": "320 Dual Tips",
-          "declaredColorCount": 320,
-          "colors": []
-        },
-        {
-          "id": "216-colors-dual-tips",
-          "name": "216 Dual Tips",
-          "declaredColorCount": 216,
-          "colors": []
-        },
-        {
-          "id": "168-colors-dual-tips",
-          "name": "168 Dual Tips",
-          "declaredColorCount": 168,
-          "colors": []
-        },
-        {
-          "id": "120-colors-dual-tips",
-          "name": "120 Dual Tips",
-          "declaredColorCount": 120,
-          "colors": []
-        },
-        {
-          "id": "104-colors-dual-tips",
-          "name": "104 Dual Tips",
-          "declaredColorCount": 104,
-          "colors": []
-        },
-        {
-          "id": "72-colors-dual-tips",
-          "name": "72 Dual Tips",
-          "declaredColorCount": 72,
-          "colors": []
-        },
-        {
-          "id": "48-colors-dual-tips",
-          "name": "48 Dual Tips",
-          "declaredColorCount": 48,
-          "colors": []
-        },
-        {
           "id": "24-colors-dual-tips",
-          "name": "24 Dual Tips",
+          "name": "Honolulu 24",
           "declaredColorCount": 24,
           "colors": []
         },
         {
-          "id": "96-pastel-colors-sweetness-blossoming",
-          "name": "96 Pastel (Sweetness & Blossoming)",
-          "declaredColorCount": 96,
+          "id": "48-colors-dual-tips",
+          "name": "Honolulu 48",
+          "declaredColorCount": 48,
+          "colors": []
+        },
+        {
+          "id": "72-colors-dual-tips",
+          "name": "Honolulu 72",
+          "declaredColorCount": 72,
+          "colors": []
+        },
+        {
+          "id": "104-colors-dual-tips",
+          "name": "Honolulu 104",
+          "declaredColorCount": 104,
+          "colors": []
+        },
+        {
+          "id": "120-colors-dual-tips",
+          "name": "Honolulu 120",
+          "declaredColorCount": 120,
+          "colors": []
+        },
+        {
+          "id": "168-colors-dual-tips",
+          "name": "Honolulu 168",
+          "declaredColorCount": 168,
+          "colors": []
+        },
+        {
+          "id": "216-colors-dual-tips",
+          "name": "Honolulu 216",
+          "declaredColorCount": 216,
+          "colors": []
+        },
+        {
+          "id": "320-colors-dual-tips",
+          "name": "Honolulu 320",
+          "declaredColorCount": 320,
           "colors": []
         },
         {
           "id": "48-pastel-colors-sweetness",
-          "name": "48 Pastel (Sweetness)",
+          "name": "Honolulu 48 pastel sweetness",
           "declaredColorCount": 48,
+          "colors": []
+        },
+        {
+          "id": "48-pastel-colors-blossoming",
+          "name": "Honolulu 48 pastel blossoming",
+          "declaredColorCount": 48,
+          "colors": []
+        },
+        {
+          "id": "96-pastel-colors-sweetness-blossoming",
+          "name": "Honolulu 96 pastel",
+          "declaredColorCount": 96,
           "colors": []
         },
         {
           "id": "48-mid-tone-colors",
-          "name": "48 Mid-Tone",
+          "name": "Honolulu 48 mid-tone",
           "declaredColorCount": 48,
           "colors": []
         },
         {
+          "id": "24-skin-tone-colors",
+          "name": "Honolulu 24 skin tones",
+          "declaredColorCount": 24,
+          "colors": []
+        },
+        {
           "id": "36-skin-tone-colors",
-          "name": "36 Skin Tone",
+          "name": "Honolulu 36 skin tones",
           "declaredColorCount": 36,
           "colors": []
         },
         {
           "id": "36-grey-colors",
-          "name": "36 Grey",
+          "name": "Honolulu 36 grey tones",
           "declaredColorCount": 36,
+          "colors": []
+        },
+        {
+          "id": "bobbie-goods",
+          "name": "Honolulu 48 Bobbie Goods",
+          "declaredColorCount": 48,
           "colors": []
         }
       ]
