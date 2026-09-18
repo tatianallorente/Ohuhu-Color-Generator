@@ -9,7 +9,7 @@ export function ColorGeneratorView() {
       <div className="mx-auto max-w-7xl">
         <Header />
 
-        <FiltersBar onGenerate={actions.handleGenerate} />
+        <FiltersBar onGenerate={actions.handleGenerate} onReset={actions.handleReset} />
         <ResultsPanel generationResult={data.generationResult} />
       </div>
     </main>

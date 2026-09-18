@@ -5,12 +5,13 @@ import { COLOR_COUNT_OPTIONS, useFiltersBarController } from './FiltersBar.contr
 
 interface FiltersBarProps {
   onGenerate?: (filters: GenerationFilters) => void;
+  onReset?: () => void;
 }
 
 const OWNED_PALETTE_IDS = ['coco-wyo', 'jade-summer'];
 
-export function FiltersBar({ onGenerate }: FiltersBarProps) {
-  const controller = useFiltersBarController({ onGenerate });
+export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
+  const controller = useFiltersBarController({ onGenerate, onReset });
   const { actions, data } = controller;
 
   return (
@@ -20,7 +21,9 @@ export function FiltersBar({ onGenerate }: FiltersBarProps) {
     >
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1.3fr_0.8fr_auto] xl:items-end">
         <FormControl fullWidth>
-          <InputLabel id="palette-label">Palette</InputLabel>
+          <InputLabel id="palette-label" shrink>
+            Palette
+          </InputLabel>
           <Select
             displayEmpty
             label="Palette"
@@ -42,7 +45,7 @@ export function FiltersBar({ onGenerate }: FiltersBarProps) {
             {data.paletteOptions.map((palette) => (
               <MenuItem key={palette.id} value={palette.id} disabled={!OWNED_PALETTE_IDS.includes(palette.id)}>
                 <Checkbox checked={data.selectedPaletteIds.includes(palette.id)} />
-                <ListItemText primary={`${palette.name} (${palette.declaredColorCount})`} />
+                <ListItemText primary={palette.name} />
               </MenuItem>
             ))}
           </Select>
@@ -91,10 +94,21 @@ export function FiltersBar({ onGenerate }: FiltersBarProps) {
             ))}
           </Select>
         </FormControl>
-
-        <Button className="min-h-14" onClick={actions.handleGenerate} size="large" variant="contained">
-          Generate colors
-        </Button>
+        <div className="flex gap-3">
+          <Button className="min-h-14" onClick={actions.handleReset} size="large" variant="outlined">
+            Reset
+          </Button>
+          <Button
+            className="min-h-14 flex-1"
+            onClick={actions.handleGenerate}
+            size="large"
+            variant="contained"
+            disableElevation
+            disabled={!data.hasSelectedPalettes}
+          >
+            Generate colors
+          </Button>
+        </div>
       </div>
     </section>
   );

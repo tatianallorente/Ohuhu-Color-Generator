@@ -10,9 +10,10 @@ export const COLOR_COUNT_OPTIONS = Array.from({ length: 9 }, (_, index) => index
 
 interface UseFiltersBarControllerOptions {
   onGenerate?: (filters: GenerationFilters) => void;
+  onReset?: () => void;
 }
 
-export function useFiltersBarController({ onGenerate }: UseFiltersBarControllerOptions) {
+export function useFiltersBarController({ onGenerate, onReset }: UseFiltersBarControllerOptions) {
   const [selectedPaletteIds, setSelectedPaletteIds] = useState([selectedSeries.palettes[0].id]);
   const [selectedFamilies, setSelectedFamilies] = useState<ColorFamily[]>([]);
   const [requestedColorCount, setRequestedColorCount] = useState(4);
@@ -39,14 +40,23 @@ export function useFiltersBarController({ onGenerate }: UseFiltersBarControllerO
     });
   };
 
+  const handleReset = () => {
+    setSelectedPaletteIds([]);
+    setSelectedFamilies([]);
+    setRequestedColorCount(4);
+    onReset?.();
+  };
+
   return {
     actions: {
       handleColorFamiliesChange,
       handleColorCountChange,
       handleGenerate,
       handlePaletteChange,
+      handleReset,
     },
     data: {
+      hasSelectedPalettes: selectedPaletteIds.length > 0,
       paletteOptions: selectedSeries.palettes,
       requestedColorCount,
       selectedFamilies,

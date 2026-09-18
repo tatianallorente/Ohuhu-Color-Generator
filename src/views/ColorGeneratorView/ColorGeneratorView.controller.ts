@@ -35,9 +35,14 @@ export function useColorGeneratorViewController() {
     });
   };
 
+  const handleReset = () => {
+    setGenerationResult(null);
+  };
+
   return {
     actions: {
       handleGenerate,
+      handleReset,
     },
     data: {
       generationResult,
