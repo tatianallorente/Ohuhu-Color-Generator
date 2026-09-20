@@ -85,7 +85,12 @@ export function ResultsPanel({ generationResult }: ResultsPanelProps) {
           <>
             <div className="mt-6 grid gap-5" style={{ gridTemplateColumns: `repeat(${data.columns}, minmax(0, 1fr))` }}>
               {data.generationResult.colors.map((color) => (
-                <ColorItem key={color.code} color={color} isDarkBackground={data.isDarkBackground} />
+                <ColorItem
+                  key={color.code}
+                  color={color}
+                  isDarkBackground={data.isDarkBackground}
+                  showDetailsOnMobile={data.columns <= 2}
+                />
               ))}
             </div>
             {data.isPreviewVisible && <PreviewDrawing colors={data.generationResult.colors} />}

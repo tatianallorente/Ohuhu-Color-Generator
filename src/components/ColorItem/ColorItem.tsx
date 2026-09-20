@@ -7,10 +7,11 @@ import { useColorItemController } from './ColorItem.controller';
 interface ColorItemProps {
   color: GeneratedColor;
   isDarkBackground: boolean;
+  showDetailsOnMobile: boolean;
 }
 
-export function ColorItem({ color, isDarkBackground }: ColorItemProps) {
-  const { actions, data } = useColorItemController();
+export function ColorItem({ color, isDarkBackground, showDetailsOnMobile }: ColorItemProps) {
+  const { actions, data } = useColorItemController(color);
 
   return (
     <article className="text-center">
@@ -22,41 +23,53 @@ export function ColorItem({ color, isDarkBackground }: ColorItemProps) {
       />
       <p className={clsx('mt-3 font-semibold', isDarkBackground ? 'text-slate-100' : 'text-slate-900')}>{color.code}</p>
       <p className={clsx('text-sm', isDarkBackground ? 'text-slate-300' : 'text-slate-600')}>{color.name}</p>
-      <button
-        aria-expanded={data.isDetailsVisible}
-        className={clsx(
-          'mt-3 flex w-full cursor-pointer items-center justify-between rounded-lg border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500',
-          isDarkBackground
-            ? 'border-slate-600 text-slate-200 hover:bg-slate-800'
-            : 'border-slate-300 text-slate-700 hover:bg-slate-50'
-        )}
-        onClick={actions.handleDetailsToggle}
-        type="button"
-      >
-        Details
-        <ChevronDown
-          aria-hidden="true"
-          className={clsx('size-5 transition-transform', data.isDetailsVisible && 'rotate-180')}
-          strokeWidth="2"
-        />
-      </button>
-
-      {data.isDetailsVisible && (
-        <div className={clsx('mt-3 text-sm', isDarkBackground ? 'text-slate-300' : 'text-slate-600')}>
-          <p>
-            Available in:{' '}
-            {color.availablePaletteNames.map((paletteName, index) => (
-              <span key={paletteName}>
-                {color.selectedPaletteNames.includes(paletteName) ? <strong>{paletteName}</strong> : paletteName}
-                {index < color.availablePaletteNames.length - 1 && ', '}
-              </span>
-            ))}
-          </p>
-          {color.isRefillAvailable && (
-            <Chip className="mt-3" label="Refill available" size="small" variant="outlined" />
+      <div className={clsx(!showDetailsOnMobile && 'hidden sm:block')}>
+        <button
+          aria-expanded={data.isDetailsVisible}
+          className={clsx(
+            'mt-3 flex w-full cursor-pointer items-center justify-between rounded-lg border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500',
+            isDarkBackground
+              ? 'border-slate-600 text-slate-200 hover:bg-slate-800'
+              : 'border-slate-300 text-slate-700 hover:bg-slate-50'
           )}
-        </div>
-      )}
+          onClick={actions.handleDetailsToggle}
+          type="button"
+        >
+          Details
+          <ChevronDown
+            aria-hidden="true"
+            className={clsx('size-5 transition-transform', data.isDetailsVisible && 'rotate-180')}
+            strokeWidth="2"
+          />
+        </button>
+
+        {data.isDetailsVisible && (
+          <div className={clsx('mt-3 text-sm', isDarkBackground ? 'text-slate-300' : 'text-slate-600')}>
+            <p className={clsx('border-b pb-3 text-left', isDarkBackground ? 'border-slate-600' : 'border-slate-200')}>
+              Available in:{' '}
+              {color.availablePaletteNames.map((paletteName, index) => (
+                <span key={paletteName}>
+                  {color.selectedPaletteNames.includes(paletteName) ? <strong>{paletteName}</strong> : paletteName}
+                  {index < color.availablePaletteNames.length - 1 && ', '}
+                </span>
+              ))}
+            </p>
+            {data.colorDetails && (
+              <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-left">
+                <dt className="font-medium">Family</dt>
+                <dd>{data.colorDetails.family}</dd>
+                <dt className="font-medium">Saturation</dt>
+                <dd>{data.colorDetails.saturation}</dd>
+                <dt className="font-medium">Brightness</dt>
+                <dd>{data.colorDetails.brightness}</dd>
+              </dl>
+            )}
+            {color.isRefillAvailable && (
+              <Chip className="mt-3" label="Refill available" size="small" variant="outlined" />
+            )}
+          </div>
+        )}
+      </div>
     </article>
   );
 }
