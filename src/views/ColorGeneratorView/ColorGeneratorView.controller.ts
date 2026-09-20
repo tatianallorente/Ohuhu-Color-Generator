@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { palettes } from '@/data/palettes';
-import type { GenerationFilters, GenerationResult } from '@/types/generation.types';
+import { refillColorCodes } from '@/data/refills';
+import type { GeneratedColor, GenerationFilters, GenerationResult } from '@/types/generation.types';
+import type { OhuhuColor, OhuhuPalette } from '@/types/ohuhu.types';
 import { filterColorsByFamilies, isColorlessBlender, shuffle } from '@/utils/utils';
 
 export function useColorGeneratorViewController() {
   const [generationResult, setGenerationResult] = useState<GenerationResult | null>(null);
 
-  const handleGenerate = (filters: GenerationFilters) => {
-    const selectedPalettes = palettes.series
+  const getSelectedPalettes = (paletteIds: string[]) =>
+    palettes.series
       .flatMap((series) => series.palettes)
-      .filter((palette) => filters.paletteIds.includes(palette.id));
+      .filter((palette) => paletteIds.includes(palette.id));
 
-    if (selectedPalettes.length === 0) {
-      return;
-    }
-
-    const paletteColors = Array.from(
+  const getAvailableColors = (selectedPalettes: OhuhuPalette[], filters: GenerationFilters) => {
+    const uniquePaletteColors = Array.from(
       new Map(
         selectedPalettes
           .flatMap((palette) => palette.colors)
@@ -24,19 +23,50 @@ export function useColorGeneratorViewController() {
       ).values()
     );
 
-    const availableColors = filterColorsByFamilies(paletteColors, filters.families);
-    const colors = shuffle(availableColors).slice(0, filters.requestedColorCount);
-
-    setGenerationResult({
-      availableColorCount: availableColors.length,
-      colors,
-      paletteName: selectedPalettes.map((palette) => palette.name).join(', '),
-      requestedColorCount: filters.requestedColorCount,
-    });
+    return filterColorsByFamilies(uniquePaletteColors, filters.families);
   };
+
+  const addColorDetails = (colors: OhuhuColor[], selectedPalettes: OhuhuPalette[]): GeneratedColor[] =>
+    colors.map((color) => {
+      const availablePalettes = palettes.series
+        .flatMap((series) => series.palettes)
+        .filter((palette) => palette.colors.some((paletteColor) => paletteColor.code === color.code));
+      const selectedPaletteNames = selectedPalettes
+        .filter((palette) => palette.colors.some((paletteColor) => paletteColor.code === color.code))
+        .map((palette) => palette.name);
+      const otherPaletteNames = availablePalettes
+        .map((palette) => palette.name)
+        .filter((paletteName) => !selectedPaletteNames.includes(paletteName));
+
+      return {
+        ...color,
+        availablePaletteNames: [...selectedPaletteNames, ...otherPaletteNames],
+        isRefillAvailable: refillColorCodes.has(color.code),
+        selectedPaletteNames,
+      };
+    });
 
   const handleReset = () => {
     setGenerationResult(null);
+  };
+
+  const handleGenerate = (filters: GenerationFilters) => {
+    const selectedPalettes = getSelectedPalettes(filters.paletteIds);
+
+    if (selectedPalettes.length === 0) {
+      return;
+    }
+
+    const availableColors = getAvailableColors(selectedPalettes, filters);
+    const selectedColors = shuffle(availableColors).slice(0, filters.requestedColorCount);
+    const colorsWithDetails = addColorDetails(selectedColors, selectedPalettes);
+
+    setGenerationResult({
+      availableColorCount: availableColors.length,
+      colors: colorsWithDetails,
+      paletteName: selectedPalettes.map((palette) => palette.name).join(', '),
+      requestedColorCount: filters.requestedColorCount,
+    });
   };
 
   return {
