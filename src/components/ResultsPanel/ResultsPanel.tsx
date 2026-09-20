@@ -28,10 +28,10 @@ export function ResultsPanel({ generationResult }: ResultsPanelProps) {
     <ThemeProvider theme={data.isDarkBackground ? RESULTS_PANEL_THEMES.dark : RESULTS_PANEL_THEMES.light}>
       <section
         className={clsx(
-          'mt-8 rounded-3xl border-[6px] p-6 shadow-sm transition-colors sm:p-8',
+          'mt-8 flex min-h-140 flex-col rounded-3xl border-[6px] p-6 shadow-sm transition-colors sm:p-8',
           data.isDarkBackground
-            ? 'border-slate-700 bg-black text-slate-100'
-            : 'border-slate-200 bg-white text-slate-900'
+            ? 'border-indigo-300 bg-black text-indigo-100'
+            : 'border-indigo-200 bg-white text-slate-900'
         )}
       >
         <div className="flex flex-wrap items-center justify-end gap-4">
@@ -68,7 +68,7 @@ export function ResultsPanel({ generationResult }: ResultsPanelProps) {
         <Divider sx={{ my: 3 }} />
 
         {!data.generationResult && (
-          <Typography align="center" className="py-6" color="text.secondary">
+          <Typography align="center" className="flex flex-1 items-center justify-center" color="text.secondary">
             Choose your filters and select "Generate colors" to see a combination.
           </Typography>
         )}
