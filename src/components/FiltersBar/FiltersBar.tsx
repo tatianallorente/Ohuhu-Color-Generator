@@ -1,5 +1,7 @@
-import { Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select } from '@mui/material';
+import { Button, Checkbox, FormControl, ListItemText, MenuItem, Select } from '@mui/material';
+import { Hash, Palette, RotateCcw, Shuffle, SwatchBook } from 'lucide-react';
 import { COLOR_FAMILY_LABELS, COLOR_FAMILY_OPTIONS } from '@/common';
+import { FilterLabel } from '@/components';
 import type { GenerationFilters } from '@/types';
 import { COLOR_COUNT_OPTIONS, useFiltersBarController } from './FiltersBar.controller';
 
@@ -21,12 +23,10 @@ export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
     >
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1.3fr_0.8fr_auto] xl:items-end">
         <FormControl fullWidth>
-          <InputLabel id="palette-label" shrink>
-            Palette
-          </InputLabel>
+          <FilterLabel filterId="palette" icon={<Palette aria-hidden="true" className="size-4" />} label="Palette" />
           <Select
             displayEmpty
-            label="Palette"
+            id="palette-select"
             labelId="palette-label"
             multiple
             onChange={actions.handlePaletteChange}
@@ -52,12 +52,14 @@ export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel id="color-families-label" shrink>
-            Color families
-          </InputLabel>
+          <FilterLabel
+            filterId="color-families"
+            icon={<SwatchBook aria-hidden="true" className="size-4" />}
+            label="Color families"
+          />
           <Select
             displayEmpty
-            label="Color families"
+            id="color-families-select"
             labelId="color-families-label"
             multiple
             onChange={actions.handleColorFamiliesChange}
@@ -80,9 +82,13 @@ export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel id="color-count-label">Number of colors</InputLabel>
-          <Select
+          <FilterLabel
+            filterId="color-count"
+            icon={<Hash aria-hidden="true" className="size-4" />}
             label="Number of colors"
+          />
+          <Select
+            id="color-count-select"
             labelId="color-count-label"
             onChange={actions.handleColorCountChange}
             value={data.requestedColorCount}
@@ -95,13 +101,20 @@ export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
           </Select>
         </FormControl>
         <div className="flex gap-3">
-          <Button className="min-h-14" onClick={actions.handleReset} size="large" variant="outlined">
+          <Button
+            className="min-h-14"
+            onClick={actions.handleReset}
+            size="large"
+            startIcon={<RotateCcw aria-hidden="true" />}
+            variant="outlined"
+          >
             Reset
           </Button>
           <Button
             className="min-h-14 flex-1"
             onClick={actions.handleGenerate}
             size="large"
+            startIcon={<Shuffle aria-hidden="true" />}
             variant="contained"
             disableElevation
             disabled={!data.hasSelectedPalettes}

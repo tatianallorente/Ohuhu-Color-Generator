@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-primary: #1976d2; /* MUI default primary */
+  --color-secondary: #9c27b0; /* MUI default secondary */
+}
+
 :root {
   font-family: Roboto, system-ui, sans-serif;
   color: #1f2937;
