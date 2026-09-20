@@ -13,7 +13,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import clsx from 'clsx';
 import { PreviewDrawing } from '@/components/PreviewDrawing/PreviewDrawing';
 import { ColorItem } from '@/components/ColorItem/ColorItem';
-import type { GenerationResult } from '@/types/generation.types';
+import type { GenerationResult } from '@/types';
 import { COLUMN_OPTIONS, useResultsPanelController } from './ResultsPanel.controller';
 import { RESULTS_PANEL_THEMES } from './ResultsPanel.theme';
 

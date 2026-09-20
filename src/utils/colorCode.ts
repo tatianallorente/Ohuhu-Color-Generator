@@ -1,5 +1,5 @@
-import type { ColorFamily } from '@/common/colorFamilies';
-import type { ParsedOhuhuColorCode } from '@/types/ohuhu.types';
+import type { ColorFamily } from '@/common';
+import type { ParsedOhuhuColorCode } from '@/types';
 
 const OHUHU_CODE_PATTERN = /^(?<family>[A-Z]+)(?<value>\d{2,3})$/;
 

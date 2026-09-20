@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import type { OhuhuColor } from '@/types/ohuhu.types';
+import type { OhuhuColor } from '@/types';
 import { usePreviewDrawingController } from './PreviewDrawing.controller';
 
 interface PreviewDrawingProps {

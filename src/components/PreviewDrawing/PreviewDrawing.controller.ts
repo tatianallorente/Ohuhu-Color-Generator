@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { OhuhuColor } from '@/types/ohuhu.types';
-import { shuffle } from '@/utils/utils';
+import type { OhuhuColor } from '@/types';
+import { shuffle } from '@/utils';
 
 interface UsePreviewDrawingControllerOptions {
   colors: readonly OhuhuColor[];

@@ -1,7 +1,7 @@
 import type { SelectChangeEvent } from '@mui/material';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
-import type { GenerationResult } from '@/types/generation.types';
+import type { GenerationResult } from '@/types';
 
 export const COLUMN_OPTIONS = [1, 2, 3, 4, 5, 6];
 

@@ -1,5 +1,5 @@
 import type { OhuhuColor } from './ohuhu.types';
-import type { ColorFamily } from '@/common/colorFamilies';
+import type { ColorFamily } from '@/common';
 
 export interface GeneratedColor extends OhuhuColor {
   availablePaletteNames: string[];

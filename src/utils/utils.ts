@@ -1,5 +1,5 @@
-import type { ColorFamily } from '@/common/colorFamilies';
-import type { OhuhuColor } from '@/types/ohuhu.types';
+import type { ColorFamily } from '@/common';
+import type { OhuhuColor } from '@/types';
 import { getColorFamily } from './colorCode';
 
 export function isColorlessBlender(color: OhuhuColor): boolean {

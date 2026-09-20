@@ -1,8 +1,8 @@
 import type { SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
-import type { ColorFamily } from '@/common/colorFamilies';
-import { palettes } from '@/data/palettes';
-import type { GenerationFilters } from '@/types/generation.types';
+import type { ColorFamily } from '@/common';
+import { palettes } from '@/data';
+import type { GenerationFilters } from '@/types';
 
 const selectedSeries = palettes.series[0];
 

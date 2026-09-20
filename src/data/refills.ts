@@ -1,4 +1,4 @@
-import type { RefillColor } from '@/types/refill.types';
+import type { RefillColor } from '@/types';
 import refillsData from './refills.json';
 
 export const refills = refillsData as RefillColor[];

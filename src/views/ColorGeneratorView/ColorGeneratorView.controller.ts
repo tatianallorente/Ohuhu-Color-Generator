@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { palettes } from '@/data/palettes';
-import { refillColorCodes } from '@/data/refills';
-import type { GeneratedColor, GenerationFilters, GenerationResult } from '@/types/generation.types';
-import type { OhuhuColor, OhuhuPalette } from '@/types/ohuhu.types';
-import { filterColorsByFamilies, isColorlessBlender, shuffle } from '@/utils/utils';
+import { palettes, refillColorCodes } from '@/data';
+import type { GeneratedColor, GenerationFilters, GenerationResult, OhuhuColor, OhuhuPalette } from '@/types';
+import { filterColorsByFamilies, isColorlessBlender, shuffle } from '@/utils';
 
 export function useColorGeneratorViewController() {
   const [generationResult, setGenerationResult] = useState<GenerationResult | null>(null);

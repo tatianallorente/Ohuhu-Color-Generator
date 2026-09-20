@@ -1,6 +1,6 @@
 import { Chip } from '@mui/material';
 import clsx from 'clsx';
-import type { GeneratedColor } from '@/types/generation.types';
+import type { GeneratedColor } from '@/types';
 import { useColorItemController } from './ColorItem.controller';
 
 interface ColorItemProps {

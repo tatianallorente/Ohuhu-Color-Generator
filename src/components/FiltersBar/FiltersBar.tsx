@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select } from '@mui/material';
-import { COLOR_FAMILY_LABELS, COLOR_FAMILY_OPTIONS } from '@/common/colorFamilies';
-import type { GenerationFilters } from '@/types/generation.types';
+import { COLOR_FAMILY_LABELS, COLOR_FAMILY_OPTIONS } from '@/common';
+import type { GenerationFilters } from '@/types';
 import { COLOR_COUNT_OPTIONS, useFiltersBarController } from './FiltersBar.controller';
 
 interface FiltersBarProps {
