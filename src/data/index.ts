@@ -1,2 +1,2 @@
-export { palettes } from './palettes';
-export { refillColorCodes, refills } from './refills';
+export { palettes } from './palettes/palettes';
+export { refillColorCodes, refills } from './refills/refills';
