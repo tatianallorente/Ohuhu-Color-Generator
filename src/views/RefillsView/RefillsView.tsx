@@ -13,6 +13,12 @@ export function RefillsView() {
         searchQuery={data.searchQuery}
         selectedPaletteIds={data.selectedPaletteIds}
       />
+      <section
+        aria-labelledby="refill-results-heading"
+        className="mt-8 rounded-3xl border-[6px] border-indigo-200 bg-white p-6 shadow-sm sm:p-8"
+      >
+        <h2>WIP: refill results</h2>
+      </section>
     </>
   );
 }
