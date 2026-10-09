@@ -1,7 +1,7 @@
 import { Button, Checkbox, FormControl, ListItemText, MenuItem, Select } from '@mui/material';
-import { Hash, Palette, RotateCcw, Shuffle, SwatchBook } from 'lucide-react';
+import { Hash, RotateCcw, Shuffle, SwatchBook } from 'lucide-react';
 import { COLOR_FAMILY_LABELS, COLOR_FAMILY_OPTIONS } from '@/common';
-import { FilterLabel } from '@/components';
+import { FilterLabel, PaletteMultiSelect } from '@/components';
 import type { GenerationFilters } from '@/types';
 import { COLOR_COUNT_OPTIONS, useFiltersBarController } from './FiltersBar.controller';
 
@@ -9,8 +9,6 @@ interface FiltersBarProps {
   onGenerate?: (filters: GenerationFilters) => void;
   onReset?: () => void;
 }
-
-const OWNED_PALETTE_IDS = ['coco-wyo', 'jade-summer'];
 
 export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
   const controller = useFiltersBarController({ onGenerate, onReset });
@@ -22,34 +20,11 @@ export function FiltersBar({ onGenerate, onReset }: FiltersBarProps) {
       className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm backdrop-blur sm:p-6"
     >
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1.3fr_0.8fr_auto] xl:items-end">
-        <FormControl fullWidth>
-          <FilterLabel filterId="palette" icon={<Palette aria-hidden="true" className="size-4" />} label="Palette" />
-          <Select
-            displayEmpty
-            id="palette-select"
-            labelId="palette-label"
-            multiple
-            onChange={actions.handlePaletteChange}
-            renderValue={(selected) =>
-              selected.length === 0 ? (
-                <span className="text-neutral-400">No palettes selected</span>
-              ) : (
-                data.paletteOptions
-                  .filter((palette) => selected.includes(palette.id))
-                  .map((palette) => palette.name)
-                  .join(', ')
-              )
-            }
-            value={data.selectedPaletteIds}
-          >
-            {data.paletteOptions.map((palette) => (
-              <MenuItem key={palette.id} value={palette.id} disabled={!OWNED_PALETTE_IDS.includes(palette.id)}>
-                <Checkbox checked={data.selectedPaletteIds.includes(palette.id)} />
-                <ListItemText primary={palette.name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <PaletteMultiSelect
+          onChange={actions.handlePaletteChange}
+          paletteOptions={data.paletteOptions}
+          selectedPaletteIds={data.selectedPaletteIds}
+        />
 
         <FormControl fullWidth>
           <FilterLabel

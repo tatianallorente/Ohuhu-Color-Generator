@@ -1,10 +1,10 @@
 import type { SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
 import type { ColorFamily } from '@/common';
-import { palettes } from '@/data';
+import { ownedPaletteIds, palettes } from '@/data';
 import type { GenerationFilters } from '@/types';
 
-const selectedSeries = palettes.series[0];
+const paletteOptions = palettes.series.flatMap((series) => series.palettes);
 
 export const COLOR_COUNT_OPTIONS = Array.from({ length: 9 }, (_, index) => index + 2);
 
@@ -14,14 +14,11 @@ interface UseFiltersBarControllerOptions {
 }
 
 export function useFiltersBarController({ onGenerate, onReset }: UseFiltersBarControllerOptions) {
-  const [selectedPaletteIds, setSelectedPaletteIds] = useState([selectedSeries.palettes[0].id]);
+  const [selectedPaletteIds, setSelectedPaletteIds] = useState([ownedPaletteIds[0]]);
   const [selectedFamilies, setSelectedFamilies] = useState<ColorFamily[]>([]);
   const [requestedColorCount, setRequestedColorCount] = useState(4);
 
-  const handlePaletteChange = (event: SelectChangeEvent<string[]>) => {
-    const value = event.target.value;
-    setSelectedPaletteIds(typeof value === 'string' ? value.split(',') : value);
-  };
+  const handlePaletteChange = (paletteIds: string[]) => setSelectedPaletteIds(paletteIds);
 
   const handleColorFamiliesChange = (event: SelectChangeEvent<ColorFamily[]>) => {
     const value = event.target.value;
@@ -57,7 +54,7 @@ export function useFiltersBarController({ onGenerate, onReset }: UseFiltersBarCo
     },
     data: {
       hasSelectedPalettes: selectedPaletteIds.length > 0,
-      paletteOptions: selectedSeries.palettes,
+      paletteOptions,
       requestedColorCount,
       selectedFamilies,
       selectedPaletteIds,
