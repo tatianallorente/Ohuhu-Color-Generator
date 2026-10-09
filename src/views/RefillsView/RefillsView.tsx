@@ -1,9 +1,18 @@
+import { useRefillsViewController } from './RefillsView.controller';
+import { RefillFilters } from './components';
+
 export function RefillsView() {
+  const { actions, data } = useRefillsViewController();
+
   return (
-    <section aria-label="Refill filters and results">
-      <div className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm backdrop-blur sm:p-6">
-        <h2>WIP: Refills views</h2>
-      </div>
-    </section>
+    <>
+      <RefillFilters
+        onSearchQueryChange={actions.handleSearchQueryChange}
+        onSelectedPaletteIdsChange={actions.handleSelectedPaletteIdsChange}
+        paletteOptions={data.paletteOptions}
+        searchQuery={data.searchQuery}
+        selectedPaletteIds={data.selectedPaletteIds}
+      />
+    </>
   );
 }
