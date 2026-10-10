@@ -1,6 +1,5 @@
-import { Chip } from '@mui/material';
 import clsx from 'clsx';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Droplet } from 'lucide-react';
 import type { GeneratedColor } from '@/types';
 import { useColorItemController } from './ColorItem.controller';
 
@@ -21,7 +20,18 @@ export function ColorItem({ color, isDarkBackground, showDetailsOnMobile }: Colo
         role="img"
         style={{ backgroundColor: color.hex }}
       />
-      <p className={clsx('mt-3 font-semibold', isDarkBackground ? 'text-slate-100' : 'text-slate-900')}>{color.code}</p>
+      <p className={clsx('mt-3 flex items-center justify-center gap-1 font-semibold', isDarkBackground ? 'text-slate-100' : 'text-slate-900')}>
+        {color.code}
+        {color.isRefillAvailable && (
+          <Droplet
+            aria-label="Refill available"
+            className={clsx('size-4', isDarkBackground ? 'text-slate-300' : 'text-slate-600')}
+            role="img"
+          >
+            <title>Refill available</title>
+          </Droplet>
+        )}
+      </p>
       <p className={clsx('text-sm', isDarkBackground ? 'text-slate-300' : 'text-slate-600')}>{color.name}</p>
       <div className={clsx(!showDetailsOnMobile && 'hidden sm:block')}>
         <button
@@ -63,9 +73,6 @@ export function ColorItem({ color, isDarkBackground, showDetailsOnMobile }: Colo
                 <dt className="font-medium">Brightness</dt>
                 <dd>{data.colorDetails.brightness}</dd>
               </dl>
-            )}
-            {color.isRefillAvailable && (
-              <Chip className="mt-3" label="Refill available" size="small" variant="outlined" />
             )}
           </div>
         )}
